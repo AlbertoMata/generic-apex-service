@@ -1,13 +1,36 @@
 ({
     soql_call: function (component, event, helper) {
         let params = event.getParam ('arguments');
+        let promise = null;
 
         if (params) {
-            let action_query = helper.configure_action (component, 'c.executeSOQL', 'soqlString', params.query_string);
 
-            action_query.setCallback (this, $A.getCallback ((response) => {
-                helper.handle_response (response);
-            }));
+            let action_query = helper.configure_action(component, 'c.executeSOQL', 'soqlString', params.query_string);
+
+            promise = new Promise((resolve, reject) => {
+
+                action_query.setCallback(this, $A.getCallback((response) => {
+                    let state = response.getState();
+
+                    if (state === 'SUCCESS') {
+                        resolve(JSON.parse(response.getReturnValue()));
+                    } else if (state === 'ERROR') {
+                        let errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) {
+                                console.debug('[Generic Apex Service]: ' + errors[0].message);
+                            }
+                        } else {
+                            console.debug('[Generic Apex Service]: Unknown error.');
+                        }
+                        reject(errors);
+                    } else if (state === 'INCOMPLETE') {
+                        reject('[Generic Apex Service]: Operation incomplete, check your internet connection.');
+                    }
+
+                }));
+
+            }); 
 
             $A.enqueueAction(action_query);
         }
@@ -16,41 +39,42 @@
     },
 
     sosl_call: function (component, event) {
-        let params = event.getParam ('arguments');
+        let params = event.getParam('arguments');
+        let promise = null;
 
 
-        let promise = new Promise ((resolve, reject) => {
-            if (params) {
-                let sosl_string   = params.query_string;
-                let action_name   = 'c.executeSOSL';
-                let action_find  = component.get (action_name);
+        if (params) {
+            let sosl_string = params.query_string;
+            let action_name = 'c.executeSOSL';
+            let action_find = component.get(action_name);
 
-                action_find.setParam ('soslString', sosl_string);
+            action_find.setParam('soslString', sosl_string);
 
-                action_find.setCallback (this, $A.getCallback ( function (response) {
-                    let state = response.getState ();
+            promise = new Promise((resolve, reject) => {
+                action_find.setCallback(this, $A.getCallback(function (response) {
+                    let state = response.getState();
 
                     if (state === 'SUCCESS') {
-                        resolve ( JSON.parse (response.getReturnValue()) );
-                    } else if (state === 'ERROR')  {
-                        let errors = response.getError ();
+                        resolve(JSON.parse(response.getReturnValue()));
+                    } else if (state === 'ERROR') {
+                        let errors = response.getError();
                         if (errors) {
                             if (errors[0] && errors[0].message) {
-                                console.debug ('[Generic Apex Service]: ' + errors[0].message);
+                                console.debug('[Generic Apex Service]: ' + errors[0].message);
                             }
                         } else {
-                            console.debug ('[Generic Apex Service]: Unknown error.');
+                            console.debug('[Generic Apex Service]: Unknown error.');
                         }
-                        reject (errors);
+                        reject(errors);
                     } else if (state === 'INCOMPLETE') {
-                        reject ('[Generic Apex Service]: Operation incomplete, check your internet connection.');
-                    } 
+                        reject('[Generic Apex Service]: Operation incomplete, check your internet connection.');
+                    }
                 }));
+            });
 
-                $A.enqueueAction(action_find);
-            }
+            $A.enqueueAction(action_find);
+        }
 
-        });
 
         return promise;
 
@@ -58,51 +82,54 @@
 
     insert_call: function (component, event) {
         let params = event.getParam ('arguments');
+        let promise = null;
 
-        let promise = new Promise ((resolve, reject) => {
 
-            if (params) {
-                let sobjects_string         = null;
-                let sobject_type            = params.sobject_type;
-                let action_name             = 'c.insertRecords';
-                let action_insert_records   = component.get (action_name);
+        if (params) {
+            let sobjects_string         = null;
+            let sobject_type            = params.sobject_type;
+            let action_name             = 'c.insertRecords';
+            let action_insert_records   = component.get (action_name);
 
-                for (let record of params.records) {
-                    if ($A.util.isUndefinedOrNull(record.attributes)) {
-                        record.attributes         = new Object ();
-                        record.attributes.type    = sobject_type;
-                    } 
+            for (let record of params.records) {
+                if ($A.util.isUndefinedOrNull(record.attributes)) {
+                    record.attributes = new Object();
+                    record.attributes.type = sobject_type;
                 }
+            }
 
-                sobjects_string = JSON.stringify (params.records);
+            sobjects_string = JSON.stringify(params.records);
+            
+            action_insert_records.setParam('jsonSObjects', sobjects_string);
 
-                action_insert_records.setParam ('jsonSObjects', sobjects_string);
+            promise = new Promise((resolve, reject) => {
 
-                action_insert_records.setCallback (this, $A.getCallback( function (response) {
-                    let state = response.getState ();
+                action_insert_records.setCallback(this, $A.getCallback(function(response) {
+                    let state = response.getState();
 
                     if (state === 'SUCCESS') {
-                        resolve ( JSON.parse (response.getReturnValue()) );
-                    } else if (state === 'ERROR')  {
-                        let errors = response.getError ();
+                        resolve(JSON.parse(response.getReturnValue()));
+                    } else if (state === 'ERROR') {
+                        let errors = response.getError();
                         if (errors) {
                             if (errors[0] && errors[0].message) {
-                                console.debug ('[Generic Apex Service]: ' + errors[0].message);
+                                console.debug('[Generic Apex Service]: ' + errors[0].message);
                             }
                         } else {
-                            console.debug ('[Generic Apex Service]: Unknown error.');
+                            console.debug('[Generic Apex Service]: Unknown error.');
                         }
-                        reject (errors);
+                        reject(errors);
                     } else if (state === 'INCOMPLETE') {
-                        reject ('[Generic Apex Service]: Operation incomplete, check your internet connection.');
-                    } 
+                        reject('[Generic Apex Service]: Operation incomplete, check your internet connection.');
+                    }
 
                 }));
 
-                $A.enqueueAction(action_insert_records);
-            }
+            });
+
+            $A.enqueueAction(action_insert_records);
+        }
         
-        });
 
 
         return promise;
@@ -187,7 +214,7 @@
                     record.attributes         = new Object ();
                     record.attributes.type    = sobject_type;
                 } 
-            }
+           }
 
             sobjects_string = JSON.stringify (params.records);
 
