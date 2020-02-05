@@ -30,6 +30,19 @@
             reject ('[Generic Apex Service]: Operation incomplete, check your internet connection.');
         } 
 
+    },
+
+    add_sobject_type: function (params) {
+        let sobject_type            = params.sobject_type;
+
+        for (let record of params.records) {
+            if ($A.util.isUndefinedOrNull(record.attributes)) {
+                record.attributes = new Object();
+                record.attributes.type = sobject_type;
+            }
+        }
+
+        return params.records;
     }
 
 })

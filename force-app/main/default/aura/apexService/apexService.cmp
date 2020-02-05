@@ -8,27 +8,24 @@
         <aura:attribute name="query_string" type="String" />
     </aura:method>
 
-    <aura:method name="insert_records" action="{!c.insert_call}" access="global" description="Serializes a new list of records and calls the server to insert them." >
+    <aura:method name="insert" action="{!c.insert_call}" access="global" description="Serializes a new list of records and calls the server to insert them." >
         <aura:attribute name="records" type="List" />
         <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="update_records" action="{!c.update_call}" access="global" description="Serializes a new list of records and calls the server to update them." >
+    <aura:method name="update" action="{!c.update_call}" access="global" description="Serializes a new list of records and calls the server to update them." >
         <aura:attribute name="records" type="List" />
-        <aura:attribute name="sobject_type" type="List" />
-        <aura:attribute name="callback" type="Function" />
+        <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="upsert_records" action="{!c.upsert_call}" access="global" description="Serializes a new list of records and calls the server to upsert them." >
+    <aura:method name="upsert" action="{!c.upsert_call}" access="global" description="Serializes a new list of records and calls the server to upsert them." >
         <aura:attribute name="records" type="List" />
-        <aura:attribute name="sobject_type" type="List" />
-        <aura:attribute name="callback" type="Function" />
+        <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="delete_records" action="{!c.delete_call}" access="global" description="Serializes a new list of records and calls the server to delete them." >
+    <aura:method name="delete" action="{!c.delete_call}" access="global" description="Serializes a new list of records and calls the server to delete them." >
         <aura:attribute name="records" type="List" />
-        <aura:attribute name="sobject_type" type="List" />
-        <aura:attribute name="callback" type="Function" />
+        <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
 </aura:component>	
