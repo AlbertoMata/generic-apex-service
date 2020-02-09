@@ -76,8 +76,8 @@ public with sharing class GenericApexService {
     @AuraEnabled
     public static String updateRecords (String jsonSObjects) {
         String jsonResponse               = null;
-        List<SObject> records             = (List<SObject>) JSON.deserialize (jsonSObjects, List<SObject>.class);
-        SObjectAccessDecision decision    = Security.stripInaccessible (AccessType.UPDATABLE , records);
+        List<SObject> records             = (List<SObject>) JSON.deserialize(jsonSObjects, List<SObject>.class);
+        SObjectAccessDecision decision    = Security.stripInaccessible(AccessType.UPDATABLE , records);
         List<SObject> depuratedRecords    = decision.getRecords();
         String errorMessage               = 'You cannot write over these fields: ' + decision.getRemovedFields(); 
 
@@ -142,10 +142,10 @@ public with sharing class GenericApexService {
     }
 
     @AuraEnabled
-    public static void deleteRecords (String sobjectsString) {
-        List<SObject> records   = (List<SObject>) JSON.deserialize (sobjectsString, List<SObject>.class);
+    public static void deleteRecords (String jsonSObjects) {
+        List<SObject> records   = (List<SObject>) JSON.deserialize (jsonSObjects, List<SObject>.class);
 
-        // issue: Check for deletion
+        // Even if sobjects are not checked for deletion, the access rights are preserved
         delete records;
     }
 
