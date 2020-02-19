@@ -6,6 +6,8 @@
 .sfdx/
 .vscode/
 .localdevserver/
+scripts
+notes*
 
 # Logs
 logs
@@ -29,3 +31,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 pmd-bin-6.20.0
+
+# force-app/main/default/classes/GenericApexServiceTest.cls
+testing-class/
