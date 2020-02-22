@@ -1,47 +1,36 @@
 ({
     soql_call: function (component, event, helper) {
-        let params = event.getParam ('arguments');
+        let params  = event.getParam ('arguments');
         let promise = null;
 
         if (params) {
-            let action_query = helper.configure_action(component, 'c.executeSOQL', 'soqlString', params.query_string);
+            let action_settings = {
+                action_name: 'c.executeSOQL', 
+                action_argument_name: 'soqlString',
+                action_argument_value: params.query_string
+            };
 
-            promise = new Promise((resolve, reject) => {
-                action_query.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);  // (context) => {handle response properly and resolve promise}
-                }));
-            }); 
-
-            $A.enqueueAction(action_query);
+            promise = helper.setup_promise (component, action_settings);
         }
 
         return promise;
     },
 
     sosl_call: function (component, event, helper) {
-        let params = event.getParam('arguments');
+        let params  = event.getParam('arguments');
         let promise = null;
 
-
         if (params) {
-            let sosl_string = params.query_string;
-            let action_name = 'c.executeSOSL';
-            let action_find = component.get(action_name);
+            let action_settings = {
+                action_name: 'c.executeSOSL', 
+                action_argument_name: 'soslString',
+                action_argument_value: params.query_string
+            };
 
-            action_find.setParam('soslString', sosl_string);
-
-            promise = new Promise((resolve, reject) => {
-                action_find.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);  // (context) => {handle response properly and resolve promise}
-                }));
-            });
-
-            $A.enqueueAction(action_find);
+            promise = helper.setup_promise (component, action_settings);
         }
 
-
         return promise;
-
     },
 
     insert_call: function (component, event, helper) {
@@ -49,30 +38,40 @@
         let promise   = null;
 
         if (params) {
-            let sobjects_string         = null;
+            let sobject_string  = helper.get_sobject_string (params);
+            let action_settings = {
+                action_name: 'c.insertRecords', 
+                action_argument_name: 'jsonSObjects',
+                action_argument_value: sobject_string
+            };
 
-            let action_name             = 'c.insertRecords';
-            let action_insert_records   = component.get (action_name);
-
-            let records                 = helper.add_sobject_type (params);
-
-            sobjects_string             = JSON.stringify(records);
-            
-            action_insert_records.setParam('jsonSObjects', sobjects_string);
-
-            promise = new Promise((resolve, reject) => {
-                action_insert_records.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);
-                }));
-            });
-
-            $A.enqueueAction(action_insert_records);
+            promise = helper.setup_promise (component, action_settings);
         }
         
 
-
         return promise;
 
+    },
+
+
+    update_call: function (component, event, helper) {
+        let params = event.getParam ('arguments');
+        let promise = null;
+
+        if (params) {
+            let sobject_string  = helper.get_sobject_string (params);
+            let action_settings = {
+                action_name: 'c.updateRecords', 
+                action_argument_name: 'jsonSObject',
+                action_argument_value: sobject_string
+            };
+
+            promise = helper.setup_promise (component, action_settings);
+
+        }
+
+        return promise;
+        
     },
 
     upsert_call: function (component, event, helper) {
@@ -80,53 +79,18 @@
         let promise   = null;
 
         if (params) {
-            let sobjects_string         = null;
-            let action_upsert_records   = component.get ('c.upsertRecords');
-            let records                 = helper.add_sobject_type (params);
+            let sobject_string          = helper.get_sobject_string (params);
+            let action_settings = {
+                action_name: 'c.upsertRecords', 
+                action_argument_name: 'jsonSObjects',
+                action_argument_value: sobject_string
+            };
 
-            sobjects_string             = JSON.stringify (records);
-
-            action_upsert_records.setParam ('jsonSObjects', sobjects_string);
-
-            promise = new Promise((resolve, reject) => {
-                action_insert_records.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);
-                }));
-            });
-
-            $A.enqueueAction(action_upsert_records);
+            promise = helper.setup_promise (component, action_settings);
         }
 
         return promise;
 
-    },
-
-    update_call: function (component, event, helper) {
-        let params = event.getParam ('arguments');
-        let promise = null;
-
-        if (params) {
-            let sobjects_string         = null;
-            let action_update_records   = component.get ('c.updateRecords');
-            let records                 = helper.add_sobject_type (params);
-
-            sobjects_string             = JSON.stringify (records);
-
-            sobjects_string = JSON.stringify (params.records);
-
-            action_update_records.setParam ('jsonSObjects', sobjects_string);
-
-            promise = new Promise((resolve, reject) => {
-                action_insert_records.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);
-                }));
-            });
-
-            $A.enqueueAction(action_update_records);
-        }
-
-        return promise;
-        
     },
 
     delete_call: function (component, event, helper) {
@@ -134,25 +98,16 @@
         let promise = null;
 
         if (params) {
-            let sobjects_string         = null;
-            let action_delete_records   = component.get ('c.deleteRecords');
+            let sobject_string          = helper.get_sobject_string (params);
+            let action_settings = {
+                action_name: 'c.deleteRecords', 
+                action_argument_name: 'jsonSObjects',
+                action_argument_value: sobject_string
+            };
 
-            let records                 = helper.add_sobject_type (params);
-            sobjects_string             = JSON.stringify (records);
-
-            action_delete_records.setParam ('jsonSObjects', sobjects_string);
-
-            promise = new Promise((resolve, reject) => {
-                action_delete_records.setCallback(this, $A.getCallback((response) => {
-                    helper.handle_response (response, resolve, reject);
-                }));
-            });
-
-
-            $A.enqueueAction(action_delete_records);
+            promise = helper.setup_promise (component, action_settings);
         }
          
         return promise;
     }
-
 })
