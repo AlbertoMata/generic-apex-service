@@ -53,7 +53,6 @@
 
     },
 
-
     update_call: function (component, event, helper) {
         let params = event.getParam ('arguments');
         let promise = null;
@@ -98,7 +97,7 @@
         let promise = null;
 
         if (params) {
-            let sobject_string          = helper.get_sobject_string (params);
+            let sobject_string  = helper.get_sobject_string (params);
             let action_settings = {
                 action_name: 'c.deleteRecords', 
                 action_argument_name: 'jsonSObjects',

@@ -8,6 +8,8 @@
 
         apex_service.soql ('SELECT Id, Name, Fax FROM Account').then ((results) => {
             console.debug (results); 
+        }).catch(error => {
+            console.log(error);
         });
 
     },

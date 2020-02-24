@@ -8,6 +8,8 @@
     <lightning:button label="find_accounts" onclick="{!c.search_accounts}" />
     <lightning:button label="insert_accounts" onclick="{!c.insert_accounts}" />
     <lightning:button label="delete_accounts" onclick="{!c.delete_accounts}" />
+    
+    <c:apexServiceDemo /> 
 
 
 </aura:application>	

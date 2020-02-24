@@ -3,8 +3,14 @@
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {
-            "c/apexServiceLWC": [
-                "apexServiceLWC/apexServiceLWC.js"
+            "c/apexServiceLwc": [
+                "apexServiceLwc/apexServiceLwc.js"
+            ],
+            "c/apexServiceDemo": [
+                "apexServiceDemo/apexServiceDemo.js"
+            ],
+            "c/apexServiceLwcDemo": [
+                "apexServiceLwcDemo/apexServiceLwcDemo.js"
             ]
         }
     },

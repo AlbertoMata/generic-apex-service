@@ -143,10 +143,12 @@ public with sharing class GenericApexService {
 
     @AuraEnabled
     public static void deleteRecords (String jsonSObjects) {
-        List<SObject> records   = (List<SObject>) JSON.deserialize (jsonSObjects, List<SObject>.class);
+        List<SObject> records             = (List<SObject>) JSON.deserialize(jsonSObjects, List<SObject>.class);
+        SObjectAccessDecision decision    = Security.stripInaccessible(AccessType.READABLE , records); // Remove thrash fields
+        List<SObject> depuratedRecords    = decision.getRecords();
 
         // Even if sobjects are not checked for deletion, the access rights are preserved
-        delete records;
+        delete depuratedRecords;
     }
 
     public static List<SObject> returnOriginalOrder (List<SObject> depuratedRecords,  List<SObject> updatedRecords, List<SObject> insertedRecords, Map<Integer,Integer> recordsOrder) {
