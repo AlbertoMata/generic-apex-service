@@ -6,7 +6,7 @@ window._apex_service = ( function () {
     function create_component () { 
         return new Promise ((resolve, reject) => {
             $A.createComponent (
-                "c:apexService",
+                "c:apexServiceAura",
                 {},
                 function (service_instance, status, error_message) {
                     console.debug(service_identifier + ': ' + status);

@@ -11,6 +11,9 @@
             ],
             "c/apexServiceLwcDemo": [
                 "apexServiceLwcDemo/apexServiceLwcDemo.js"
+            ],
+            "c/apexService": [
+                "apexService/apexService.js"
             ]
         }
     },

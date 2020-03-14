@@ -1,12 +1,12 @@
 ({
     scripts_cargados: function (component, event, helper) {
-        _apex_service.init ();
+        _apexService.init ();
     },
 
     query_accounts: function (component, event, helper) {
-        let apex_service = component.find ('apex_service');
+        let apexService = component.find ('apexService');
 
-        apex_service.soql ('SELECT Id, Name, Fax FROM Account').then ((results) => {
+        apexService.soql ('SELECT Id, Name, Fax FROM Account').then ((results) => {
             console.debug (results); 
         }).catch(error => {
             console.log(error);
@@ -15,16 +15,16 @@
     },
 
     search_accounts: function (component, event, helper) {
-        let apex_service = component.find ('apex_service');
+        let apexService = component.find ('apexService');
 
-        apex_service.sosl ('FIND {foo} IN NAME Fields RETURNING Account(Name,Fax)').then ((results) => {
+        apexService.sosl ('FIND {foo} IN NAME Fields RETURNING Account(Name,Fax)').then ((results) => {
             console.debug (results); 
         }); 
 
     },
 
     insert_accounts: function (component, event, helper) {
-        let apex_service = component.find ('apex_service');
+        let apexService = component.find ('apexService');
 
         let foo         = new Object();
             foo.Name    = 'foo';
@@ -33,20 +33,20 @@
         let accs        = new Array();
             accs.push (foo);
 
-        apex_service.insert (accs,'Account').then ((results) => {
+        apexService.insert (accs,'Account').then ((results) => {
             console.debug (results); 
         }); 
 
     },
 
     delete_accounts: function (component, event, helper) {
-        let apex_service = component.find ('apex_service');
+        let apexService = component.find ('apexService');
 
 
-        apex_service.soql ("SELECT Id, Name FROM Account WHERE Name = 'foo' ").then ((results) => {
+        apexService.soql ("SELECT Id, Name FROM Account WHERE Name = 'foo' ").then ((results) => {
             console.debug (results); 
             console.debug (typeof results); 
-            apex_service.delete(results, 'Account').then ((results) => { console.debug (results) }  );
+            apexService.delete(results, 'Account').then ((results) => { console.debug (results) }  );
         }); 
 
     }

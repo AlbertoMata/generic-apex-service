@@ -62,9 +62,9 @@
 
         let promise = new Promise((resolve, reject) => {
             action.setCallback(this, $A.getCallback((response) => {
-                this.handle_response (response, resolve, reject);  // (context) => {handle response properly and resolve promise}
+                this.handle_response(response, resolve, reject);  // (context) => {handle response properly and resolve promise}
             }));
-        }); 
+        });
 
         $A.enqueueAction(action);
 
