@@ -43,7 +43,7 @@ export default class ApexService extends LightningElement {
 
     @api
     insert(records, sobject_type) {
-        const jsonSObjects = this.get_sobject_string(records, sobject_type);
+        const jsonSObjects = this.getSObjectString(records, sobject_type);
 
         console.log(jsonSObjects);
 
@@ -63,7 +63,7 @@ export default class ApexService extends LightningElement {
 
     @api
     update(records, sobject_type) {
-        const jsonSObjects = this.get_sobject_string(records, sobject_type);
+        const jsonSObjects = this.getSObjectString(records, sobject_type);
 
         return new Promise((resolve, reject) => {
             updateRecords({ jsonSObjects: jsonSObjects })
@@ -80,7 +80,7 @@ export default class ApexService extends LightningElement {
 
     @api
     upsert(records, sobject_type) {
-        const jsonSObjects = this.get_sobject_string(records, sobject_type);
+        const jsonSObjects = this.getSObjectString(records, sobject_type);
 
         return new Promise((resolve, reject) => {
             upsertRecords({ jsonSObjects: jsonSObjects })
@@ -97,7 +97,7 @@ export default class ApexService extends LightningElement {
 
     @api
     delete(records, sobject_type) {
-        const jsonSObjects = this.get_sobject_string(records, sobject_type);
+        const jsonSObjects = this.getSObjectString(records, sobject_type);
 
         return new Promise((resolve, reject) => {
             deleteRecords({ jsonSObjects: jsonSObjects })
@@ -112,12 +112,12 @@ export default class ApexService extends LightningElement {
 
     }
 
-    get_sobject_string = (records, sobject_type) => {
-        const formatted_records = this.add_sobject_type(records, sobject_type);
+    getSObjectString = (records, sobject_type) => {
+        const formatted_records = this.addSObjectType(records, sobject_type);
         return JSON.stringify(formatted_records);
     }
 
-    add_sobject_type = (records, sobject_type) => {
+    addSObjectType = (records, sobject_type) => {
         const formatted_records = records.map(record => {
             record.attributes = new Object();
             record.attributes.type = sobject_type;

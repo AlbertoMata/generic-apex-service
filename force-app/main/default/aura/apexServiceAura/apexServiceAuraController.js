@@ -1,5 +1,5 @@
 ({
-    soql_call: function (component, event, helper) {
+    soqlCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
@@ -10,13 +10,13 @@
                 action_argument_value: params.query_string
             };
 
-            promise = helper.setup_promise(component, action_settings);
+            promise = helper.setupPromise(component, action_settings);
         }
 
         return promise;
     },
 
-    sosl_call: function (component, event, helper) {
+    soslCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
@@ -27,25 +27,25 @@
                 action_argument_value: params.query_string
             };
 
-            promise = helper.setup_promise(component, action_settings);
+            promise = helper.setupPromise(component, action_settings);
         }
 
         return promise;
     },
 
-    insert_call: function (component, event, helper) {
+    insertCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
         if (params) {
-            let sobject_string = helper.get_sobject_string(params);
+            let sobject_string = helper.getSObjectString(params);
             let action_settings = {
                 action_name: 'c.insertRecords',
                 action_argument_name: 'jsonSObjects',
                 action_argument_value: sobject_string
             };
 
-            promise = helper.setup_promise(component, action_settings);
+            promise = helper.setupPromise(component, action_settings);
         }
 
 
@@ -53,12 +53,12 @@
 
     },
 
-    update_call: function (component, event, helper) {
+    updateCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
         if (params) {
-            let sobject_string = helper.get_sobject_string(params);
+            let sobject_string = helper.getSObjectString(params);
             let action_settings = {
                 action_name: 'c.updateRecords',
                 action_argument_name: 'jsonSObject',
@@ -73,12 +73,12 @@
 
     },
 
-    upsert_call: function (component, event, helper) {
+    upsertCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
         if (params) {
-            let sobject_string = helper.get_sobject_string(params);
+            let sobject_string = helper.getSObjectString(params);
             let action_settings = {
                 action_name: 'c.upsertRecords',
                 action_argument_name: 'jsonSObjects',
@@ -92,19 +92,19 @@
 
     },
 
-    delete_call: function (component, event, helper) {
+    deleteCall: function (component, event, helper) {
         let params = event.getParam('arguments');
         let promise = null;
 
         if (params) {
-            let sobject_string = helper.get_sobject_string(params);
+            let sobject_string = helper.getSObjectString(params);
             let action_settings = {
                 action_name: 'c.deleteRecords',
                 action_argument_name: 'jsonSObjects',
                 action_argument_value: sobject_string
             };
 
-            promise = helper.setup_promise(component, action_settings);
+            promise = helper.setupPromise(component, action_settings);
         }
 
         return promise;

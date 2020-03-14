@@ -1,5 +1,5 @@
 ({
-    configure_action: function (component, action_name, parameter_name, string_parameter) {
+    configureAction: function (component, action_name, parameter_name, string_parameter) {
         let action = component.get(action_name);
         let parameters = new Object();
 
@@ -10,7 +10,7 @@
         return action;
     },
 
-    handle_response: function (response, resolve, reject) {
+    handleResponse: function (response, resolve, reject) {
         let state = response.getState();
 
         if (state === 'SUCCESS') {
@@ -31,7 +31,7 @@
 
     },
 
-    add_sobject_type: function (params) {
+    addSObjectType: function (params) {
         let sobject_type = params.sobject_type;
 
         for (let record of params.records) {
@@ -44,16 +44,16 @@
         return params.records;
     },
 
-    get_sobject_string: function (params) {
-        let records = this.add_sobject_type(params);
+    getSObjectString: function (params) {
+        let records = this.addSObjectType(params);
         let sobject_string = JSON.stringify(records);
 
         return sobject_string;
     },
 
-    setup_promise: function (component, action_settings) {
+    setupPromise: function (component, action_settings) {
 
-        let action = this.configure_action(
+        let action = this.configureAction(
             component,
             action_settings.action_name,
             action_settings.action_argument_name,
@@ -62,7 +62,7 @@
 
         let promise = new Promise((resolve, reject) => {
             action.setCallback(this, $A.getCallback((response) => {
-                this.handle_response(response, resolve, reject);  // (context) => {handle response properly and resolve promise}
+                this.handleResponse(response, resolve, reject);  // (context) => {handle response properly and resolve promise}
             }));
         });
 

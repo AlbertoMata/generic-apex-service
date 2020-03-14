@@ -1,32 +1,32 @@
 <aura:component controller="GenericApexService">
 
-    <aura:method name="soql" action="{!c.soql_call}" access="global" description="Executes a soql query.">
+    <aura:method name="soql" action="{!c.soqlCall}" access="global" description="Executes a soql query.">
         <aura:attribute name="query_string" type="String" />
     </aura:method>
 
-    <aura:method name="sosl" action="{!c.sosl_call}" access="global" description="Executes a sosl query.">
+    <aura:method name="sosl" action="{!c.soslCall}" access="global" description="Executes a sosl query.">
         <aura:attribute name="query_string" type="String" />
     </aura:method>
 
-    <aura:method name="insert" action="{!c.insert_call}" access="global"
+    <aura:method name="insert" action="{!c.insertCall}" access="global"
         description="Serializes a new list of records and calls the server to insert them.">
         <aura:attribute name="records" type="List" />
         <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="update" action="{!c.update_call}" access="global"
+    <aura:method name="update" action="{!c.updateCall}" access="global"
         description="Serializes a new list of records and calls the server to update them.">
         <aura:attribute name="records" type="List" />
         <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="upsert" action="{!c.upsert_call}" access="global"
+    <aura:method name="upsert" action="{!c.upsertCall}" access="global"
         description="Serializes a new list of records and calls the server to upsert them.">
         <aura:attribute name="records" type="List" />
         <aura:attribute name="sobject_type" type="String" />
     </aura:method>
 
-    <aura:method name="delete" action="{!c.delete_call}" access="global"
+    <aura:method name="delete" action="{!c.deleteCall}" access="global"
         description="Serializes a new list of records and calls the server to delete them.">
         <aura:attribute name="records" type="List" />
         <aura:attribute name="sobject_type" type="String" />
