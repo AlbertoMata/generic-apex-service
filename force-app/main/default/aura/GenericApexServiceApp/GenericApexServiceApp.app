@@ -9,7 +9,7 @@
     <lightning:button label="insert_accounts" onclick="{!c.insert_accounts}" />
     <lightning:button label="delete_accounts" onclick="{!c.delete_accounts}" />
 
-    <!-- <c:apexServiceDemo />  -->
+    <c:apexServiceDemo /> 
 
 
 </aura:application>

@@ -3,17 +3,18 @@ import { LightningElement } from 'lwc';
 export default class ApexServiceDemo extends LightningElement {
 
     handleClick = event => {
-        let apexService = this.template.querySelector('c-apex-service-lwc');
-        let accounts = apexService.soql('SELECT Name, ( SELECT LastName FROM Contacts) FROM Account');
+            let apexService = this.template.querySelector('c-apex-service');
 
-        accounts.then(result => {
-            console.log(result);
-        });
+            let accountPromise = apexService.soql ('SELECT Name, ( SELECT LastName FROM Contacts) FROM Account');
 
+            accountPromise.then(result => {
+                console.log(result);
+
+            });
     }
 
     searchAccounts = event => {
-        let apexService = this.template.querySelector('c-apex-service-lwc');
+        let apexService = this.template.querySelector('c-apex-service');
         apexService.sosl ('FIND {foo} IN NAME Fields RETURNING Account(Name,Fax)').then ((results) => {
             console.debug (results); 
         }); 
@@ -22,7 +23,7 @@ export default class ApexServiceDemo extends LightningElement {
     }
 
     insertAccounts = event => {
-        let apexService = this.template.querySelector('c-apex-service-lwc');
+        let apexService = this.template.querySelector('c-apex-service');
 
         let foo         = new Object();
             foo.Name    = 'foo';
